@@ -241,7 +241,6 @@ string LinuxParser::User(int pid) {
   string line;
   string name;
   string user;
-  string x;
   string temp_uid;
   string uid = LinuxParser::Uid(pid);
   std::ifstream filestream(kPasswordPath);
@@ -250,7 +249,7 @@ string LinuxParser::User(int pid) {
       std::replace(line.begin(), line.end(), ":x", "  ");
       std::replace(line.begin(), line.end(), ':', ' ');
       std::istringstream linestream(line);
-      linestream >> user >> x >> temp_uid;
+      linestream >> user >> temp_uid;
       if (temp_uid == uid) break;
     }
   }
