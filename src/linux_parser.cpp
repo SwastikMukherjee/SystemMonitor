@@ -112,7 +112,7 @@ long LinuxParser::Jiffies() {
 
 // TODO: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::ActiveJiffies(int pid [[maybe_unused]]) { return 0; }
+long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 
 // DONE: Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() {
@@ -241,15 +241,15 @@ string LinuxParser::User(int pid) {
   string line;
   string name;
   string user;
+  string x;
   string temp_uid;
   string uid = LinuxParser::Uid(pid);
   std::ifstream filestream(kPasswordPath);
   if (filestream.is_open()) {
     while (getline(filestream, line)) {
-      std::replace(line.begin(), line.end(), ":x", "  ");
       std::replace(line.begin(), line.end(), ':', ' ');
       std::istringstream linestream(line);
-      linestream >> user >> temp_uid;
+      linestream >> user >> x >> temp_uid;
       if (temp_uid == uid) break;
     }
   }

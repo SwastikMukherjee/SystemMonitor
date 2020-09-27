@@ -18,7 +18,7 @@ int Process::Pid() { return pid_; }
 
 // DONE: Return this process's CPU utilization
 // NOTE: Inspired from https://stackoverflow.com/a/16736599
-float Process::CpuUtilization() {
+float Process::CpuUtilization() const {
   string value, line, utime, stime, cutime, cstime;
   std::ifstream filestream(LinuxParser::kProcDirectory + std::to_string(pid_) +
                            LinuxParser::kStatFilename);
@@ -56,7 +56,7 @@ string Process::Ram() { return LinuxParser::Ram(pid_); }
 string Process::User() { return LinuxParser::User(pid_); }
 
 // DONE: Return the age of this process (in seconds)
-long int Process::UpTime() { return LinuxParser::UpTime(pid_); }
+long int Process::UpTime() const { return LinuxParser::UpTime(pid_); }
 
 // DONE: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
