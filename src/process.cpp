@@ -28,13 +28,13 @@ float Process::CpuUtilization() const {
     for (size_t i = 0; i <= 21; i++) {
       linestream >> value;
       if (i == 13) {
-        utime = value;
+        utime = std::all_of(value.begin(), value.end(), isdigit) && !value.empty() ? value : "0.0";
       } else if (i == 14) {
-        stime = value;
+        stime = std::all_of(value.begin(), value.end(), isdigit) && !value.empty() ? value : "0.0";
       } else if (i == 15) {
-        cutime = value;
+        cutime = std::all_of(value.begin(), value.end(), isdigit) && !value.empty() ? value : "0.0";
       } else if (i == 16) {
-        cstime = value;
+        cstime = std::all_of(value.begin(), value.end(), isdigit) && !value.empty() ? value : "0.0";
       } else {
         break;
       }

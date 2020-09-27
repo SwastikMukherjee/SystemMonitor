@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 
-using std::stof;
 using std::string;
 using std::to_string;
 using std::vector;
@@ -117,17 +116,18 @@ long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 // DONE: Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() {
   vector<string> values = LinuxParser::CpuUtilization();
-  return stof(values[kUser_]) + stof(values[kNice_]) + stof(values[kSystem_]) +
-         stof(values[kIdle_]) + stof(values[kSoftIRQ_]) +
-         stof(values[kSteal_]) + stof(values[kGuest_]) +
-         stof(values[kGuestNice_]);
+  // long kuser = values[kUser_] != "" ? stol(values[kUser_]) : 0;
+  return stol(values[kUser_]) + stol(values[kNice_]) + stol(values[kSystem_]) +
+         stol(values[kIdle_]) + stol(values[kSoftIRQ_]) +
+         stol(values[kSteal_]) + stol(values[kGuest_]) +
+         stol(values[kGuestNice_]);
   ;
 }
 
 // DONE: Read and return the number of idle jiffies for the system
 long LinuxParser::IdleJiffies() {
   vector<string> values = LinuxParser::CpuUtilization();
-  return stof(values[kIdle_]) + stof(values[kIOwait_]);
+  return stol(values[kIdle_]) + stol(values[kIOwait_]);
 }
 
 // DONE: Read and return CPU utilization
