@@ -35,12 +35,12 @@ string LinuxParser::OperatingSystem() {
 
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::Kernel() {
-  string linux, version, kernel, line;
+  string os, version, kernel, line;
   std::ifstream stream(kProcDirectory + kVersionFilename);
   if (stream.is_open()) {
     std::getline(stream, line);
     std::istringstream linestream(line);
-    linestream >> linux >> version >> kernel;
+    linestream >> os >> version >> kernel;
   }
   return kernel;
 }
@@ -110,7 +110,9 @@ long LinuxParser::Jiffies() {
 
 // TODO: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
+/*
 long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
+*/
 
 // DONE: Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() {
@@ -260,6 +262,7 @@ string LinuxParser::User(int pid) {
 long LinuxParser::UpTime(int pid) {
   string line;
   string value;
+  long uptime = -1;
   std::ifstream filestream(kProcDirectory + to_string(pid) + kStatFilename);
   if (filestream.is_open()) {
     getline(filestream, line);
@@ -267,8 +270,9 @@ long LinuxParser::UpTime(int pid) {
     for (size_t i = 0; i <= 21; i++) {
       linestream >> value;
       if (i == 21) {
-        return UpTime() - std::stol(value) / sysconf(_SC_CLK_TCK);
+        uptime = UpTime() - std::stol(value) / sysconf(_SC_CLK_TCK);
       }
     }
   }
+  return uptime;
 }

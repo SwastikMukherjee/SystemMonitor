@@ -21,6 +21,7 @@ int Process::Pid() { return pid_; }
 // NOTE: Inspired from https://stackoverflow.com/a/16736599
 float Process::CpuUtilization() const {
   string value, line, utime, stime, cutime, cstime;
+  float cpuutil = -1.0;
   std::ifstream filestream(LinuxParser::kProcDirectory + std::to_string(pid_) +
                            LinuxParser::kStatFilename);
   if (filestream.is_open()) {
@@ -46,8 +47,9 @@ float Process::CpuUtilization() const {
     float total_time = std::stof(utime) + std::stof(stime) + std::stof(cutime) +
                        std::stof(cstime);
     long uptime = this->UpTime();
-    return (total_time / sysconf(_SC_CLK_TCK)) / uptime;
+    cpuutil = (total_time / sysconf(_SC_CLK_TCK)) / uptime;
   }
+  return cpuutil;
 }
 
 // DONE: Return the command that generated this process
